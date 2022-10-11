@@ -1,0 +1,75 @@
+Today i successfully implemented Facebook SDK in a sample demo App. Here fisrt i make  a demo facebook login app in which i use this code which is shown below.
+I faced 2 error which is time taking  but by proper search and help of batchmates i implemented it succesfully. The package i used is react-native-fbsdk-next.
+//Steps  how i implemented.
+1.I created a facebook developer account.
+2. I created app in the developer account.
+3.Selected playstore where my app is publish.
+4.I generated hashkey of my demo app.
+5. Setup the environment by using quick start guide
+6.Then generated hashkey of my demo app with the help of command given the doccumentation.
+7.Build a demo app in which i written code inside login.js for login with facebook button.
+8. Then i run  the app and  login with my account .
+9.After login successfully, login with facebook button changes into logout button.
+10.It shows the App is running perfectly.
+//Code
+import React from 'react';
+import {View, Text} from 'react-native';
+import {LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk-next';
+
+const Login=()=>{
+  return(
+    <View>
+      <Text>fbsdk</Text>
+      <LoginButton
+    onLoginFinished={
+      (error, result) => {
+      console.log('on loginFinished function')
+        if (error) {
+          console.log("login has error: " +error);
+        } else if (result.isCancelled) {
+          console.log("login is cancelled.");
+        } else {
+
+          AccessToken.getCurrentAccessToken().then(
+            (data) => {
+              let accessToken = data.accessToken
+              alert(accessToken.toString())
+
+              const responseInfoCallback = (error, result) => {
+                if (error) {
+                  console.log(error)
+                  console.log('Error fetching data: ' + error.toString());
+                } else {
+                  console.log(result)
+                  console.log('Success fetching data: ' + result.toString());
+                }
+              }
+
+              const infoRequest = new GraphRequest(
+                '/me',
+                {
+                  accessToken: accessToken,
+                  parameters: {
+                    fields: {
+                      string: 'email,name,first_name,middle_name,last_name'
+                    }
+                  }
+                },
+                responseInfoCallback
+              );
+
+              // Start the graph request.
+              new GraphRequestManager().addRequest(infoRequest).start()
+            }
+          )
+
+        }
+      }
+    }
+    onLogoutFinished={() => console.log("logout.")}
+    />
+    </View>
+  )
+}
+
+export default Login;

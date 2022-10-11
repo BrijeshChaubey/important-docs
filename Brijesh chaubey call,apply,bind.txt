@@ -1,0 +1,52 @@
+Call-The call() method is a predefined JavaScript method.With call(), an object can use a method belonging to another object.in simple sentence if class has a method and other class wants that method it can borrow it with help of call() method.Here it takes argument as parameter.
+//Code
+const person = {
+  firstName:"Rakesh",
+  lastName: "Singh",
+  fullName: function (city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  }
+}
+
+
+
+const person2={
+    firstName:"Brijesh",
+    lastName:"Chaubey"
+}
+console.log(person.fullName.call(person2,"Oslo", "Norway"));
+Apply-The apply() method is a predefined JavaScript method. an object can use a method belonging to another object.Same as call method the major difference is that  it takes arrray as parameter.
+//Code-const person = {
+  firstName:"Rakesh",
+  lastName: "Singh",
+  fullName: function (city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  }
+}
+
+
+
+const person2={
+    firstName:"Brijesh",
+    lastName:"Chaubey"
+}
+console.log(person.fullName.apply(person2,["Oslo", "Norway"]);
+Bind-Here it also borrows the method from other class but the bind() method creates a new function that, when we need that function we can call it as shown in the example code.
+//Code-
+const person = {
+  firstName:"Rakesh",
+  lastName: "Singh",
+  fullName: function (city, country) {
+    return this.firstName + " " + this.lastName ;
+  }
+}
+
+
+
+const person2={
+    firstName:"Brijesh",
+    lastName:"Chaubey"
+}
+var a=person.fullName.bind(person2);
+console.log(a());
+

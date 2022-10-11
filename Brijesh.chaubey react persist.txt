@@ -1,0 +1,200 @@
+Redux-Persist--Redux-Persist saves the Redux Store when the app is closed or refreshed in the iPhone simulator.the redux-persist comes into play, with support for redux toolkit, it helps us to persist the state after page refresh. 
+Use of Redux-Persist-When we refresh page in a web-app, the state always resets back to the initial values which in not a good thing when you try to build some large web-app like e-commerce.Say you’re using your app and at some point, you decide to clear out all of your apps because you have too many open. You then click on your app icon and it launches, but you’re now prompted with a Login screen.
+To resolve this problem we use redux-persist it lets you add persistence to the store. The library will automatically save the store each time the state updates. You don't need to write any persistence code in your actions or reducers.Due to which after refreshing a website or relaunching app after closing it will not direct you to initial page (starting page).
+//App
+import React from 'react';
+import { PersistGate } from 'redux-persist/es/integration/react'
+import { Provider } from 'react-redux';
+
+// Imports: Screens
+import Counter from './screens/Counter';
+
+// Imports: Redux Persist Persister
+import { store, persistor } from './redux/store/store';
+
+// React Native: App
+export default App = () => {
+  return (
+    // Redux: Global Store
+    <Provider store={store}>
+      <PersistGate 
+        loading={null}
+        persistor={persistor}
+      >
+        <Counter />
+      </PersistGate>
+    </Provider>
+//Counter
+// Imports: Dependencies
+import React, { Component } from 'react';
+import { Button, Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
+
+// Imports: Redux Actions
+import { login } from '../redux/actions/authActions';
+import { increaseCounter, decreaseCounter } from '../redux/actions/counterActions';
+
+// Screen Dimensions
+const { height, width } = Dimensions.get('window');
+
+// Screen: Counter
+class Counter extends React.Component {
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+
+        <View style={styles.loggedInContainer}>
+          <Text style={styles.loggedInText}>Logged In: </Text>
+          <Text style={styles.loggedInText}>{`${this.props.loggedIn}`}</Text>
+
+          <Button
+            title="Login"
+            onPress={this.props.loggedIn === false ? () => this.props.reduxLogin(true) : () => this.props.reduxLogin(false)}
+            style={styles.loginButton}
+          />
+        </View>
+
+        <Text style={styles.counterTitle}>Counter</Text>
+
+        <View style={styles.counterContainer}>
+          <TouchableOpacity onPress={() => this.props.reduxIncreaseCounter()}>
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.counterText}>{this.props.counter}</Text>
+
+          <TouchableOpacity onPress={() => this.props.reduxDecreaseCounter()}>
+            <Text style={styles.buttonText}>-</Text>
+          </TouchableOpacity>
+        </View>
+
+      </SafeAreaView>
+    )
+  }
+}
+//Store
+import AsyncStorage from '@react-native-community/async-storage';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import { persistStore, persistReducer } from 'redux-persist';
+
+// Imports: Redux
+import rootReducer from '../reducers/index';
+
+// Middleware: Redux Persist Config
+const persistConfig = {
+  // Root?
+  key: 'root',
+  // Storage Method (React Native)
+  storage: AsyncStorage,
+  // Whitelist (Save Specific Reducers)
+  whitelist: [
+    'authReducer',
+  ],
+  // Blacklist (Don't Save Specific Reducers)
+  blacklist: [
+    'counterReducer',
+  ],
+};
+
+// Middleware: Redux Persist Persisted Reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+// Redux: Store
+const store = createStore(
+  persistedReducer,
+  applyMiddleware(
+    createLogger(),
+  ),
+);
+
+// Middleware: Redux Persist Persister
+let persistor = persistStore(store);
+
+// Exports
+export {
+  store,
+  persistor,
+};
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loggedInContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  loginButton: {
+    marginTop: 20,
+    paddingTop: 20,
+  },
+  counterContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loggedInText: {
+    fontFamily: 'System',
+    fontSize: 17,
+    fontWeight: '400',
+    color: '#000',
+  },
+  counterTitle: {
+    fontFamily: 'System',
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#000',
+  },
+  counterText: {
+    fontFamily: 'System',
+    fontSize: 36,
+    fontWeight: '400',
+    color: '#000',
+  },
+  buttonText: {
+    fontFamily: 'System',
+    fontSize: 50,
+    fontWeight: '300',
+    color: '#007AFF',
+    marginLeft: 40,
+    marginRight: 40,
+  },
+});
+
+// Map State To Props (Redux Store Passes State To Component)
+const mapStateToProps = (state) => {
+  // Redux Store --> Component
+  return {
+    counter: state.counterReducer.counter,
+    loggedIn: state.authReducer.loggedIn,
+  };
+};
+
+// Map Dispatch To Props (Dispatch Actions To Reducers. Reducers Then Modify The Data And Assign It To Your Props)
+const mapDispatchToProps = (dispatch) => {
+  // Action
+    return {
+      // Increase Counter
+      reduxIncreaseCounter: () => dispatch(increaseCounter()),
+      // Decrease Counter
+      reduxDecreaseCounter: () => dispatch(decreaseCounter()),
+      // Login
+      reduxLogin: (trueFalse) => dispatch(login(trueFalse)),
+   };
+};
+
+// Exports
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+
+//Realm, Redux Offline, SQLite, Modernizr,  are the most popular alternatives and competitors to Redux Persist
+
+

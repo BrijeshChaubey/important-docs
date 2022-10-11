@@ -1,0 +1,16 @@
+Stack- It is a data structure in which data is stored and remove with a rule .here it follow the rule Last enter first out also known as Lifo .for example if there is a box in which we have store book we will put one by on inside in such a ways second book goes on top of fist book and third book on second book which cause a sequence of structure if we want books out of the box we will take out the which is store at last in the box this is stack. 
+Call Stack- Call stack is used by javascript to track multiple function calls.it is like a stack where function push down and pop out .if there is a function name One()which  invokes function two() and it invoke function three() and it return hello as we show in image in call stack function is placed as there calling sequence.
+//Code
+function one(){
+  two();
+}
+function two(){
+    three();
+}
+function three(){
+    return 'hello';
+}
+debugger;
+one();
+Execution context-It is a type of container inside which java script program executes here .it is divided into two component  variable environment(memory) and Thread of Execution(code).in memory component variables ,array and function are store with key value pair And In code component lines of code is store and get executed  line by line because js is synchronous single-threaded language.
+Priority queue is a extension of queue in which every element inside priority queue has a priority associated with them .element are added in queue as per priority and lowest priority element get removed first.

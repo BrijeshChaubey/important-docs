@@ -1,0 +1,64 @@
+//Promise--A Promise is a proxy for a value not necessarily known when the promise is created. It allows you to associate handlers with an asynchronous action's eventual success value or failure reason. This lets asynchronous methods return values like synchronous methods: instead of immediately returning the final value, the asynchronous method returns a promise to supply the value at some point in the future.
+
+A Promise is in one of these states:
+
+pending: initial state, neither fulfilled nor rejected.
+fulfilled: meaning that the operation was completed successfully.
+rejected: meaning that the operation failed.
+//code
+let myPromise=new Promise(function (myResolve,myReject) {
+  let a=10;
+    if (a==0){
+        myResolve("Ok");
+    }
+    else {
+        myReject("error");
+    }
+});
+myPromise.then(
+    function(value) {console.log(value);},
+    function(error) {console.log(error)}   
+    
+)
+
+//Promise resolve--The Promise.resolve() method returns a Promise object that is resolved with a given value. If the value is a promise, that promise is returned; if the value is a thenable (i.e. has a "then" method), the returned promise will "follow" that thenable, adopting its eventual state; otherwise the returned promise will be fulfilled with the value. This function flattens nested layers of promise-like objects (e.g. a promise that resolves to a promise that resolves to something) into a single layer.
+//Code--
+1-var p = Promise.resolve([1,2,3,5,7,9]);
+p.then(function(v) {
+  console.log(v[2]); 
+});
+2-var fake = Promise.resolve(66);
+var cast = Promise.resolve(fake);
+cast.then(function(value) {
+  console.log('value: ' + value);
+});
+console.log('fake === cast ? ' + (fake === cast))
+//Callback--A callback function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
+//Code
+function eligible(age) {
+    if (age>18){
+        alert("eligible for vote")}
+    else {
+      alert("not eligible for vote")  
+    }
+  
+}
+
+function processUserInput(callback) {
+  var age = prompt('Please enter your age.');
+  callback(age);
+}
+processUserInput(eligible);
+
+
+//Promise all--The Promise.all() method takes an iterable of promises as an input, and returns a single Promise that resolves to an array of the results of the input promises. This returned promise will resolve when all of the input's promises have resolved, or if the input iterable contains no promises. It rejects immediately upon any of the input promises rejecting or non-promises throwing an error, and will reject with this first rejection message / error.
+//Code
+const promise1 = Promise.resolve(3);
+const promise2 = 55;
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 80, 'lol');
+});
+
+Promise.all([promise1, promise2, promise3]).then((values) => {
+  console.log(values);
+});

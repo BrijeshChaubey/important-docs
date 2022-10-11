@@ -1,0 +1,51 @@
+ var Passwordpattern=
+    /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"/;
+
+
+onSubmit = email => {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8;',
+      },
+    };
+    console.log(this.state.ProfileImage);
+    var emailpattern =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+    if (emailpattern.test(this.state.email) === true) {
+      console.warn('register');
+    }
+    
+     else {
+      alert('Incorrect Email');
+    }
+    axios
+        .post('https://quiet-harbor-07900.herokuapp.com/#/users/post_register', {
+          name: this.state.EmployeeName,
+          email: this.state.email,
+        })
+        .then(function (response) {
+          console.log('response', response);
+          console.log('success');
+        })
+        .catch(function (error) {
+          console.log('error', error);
+        });
+        
+        TextInputComponent
+          placeholder="Employee Name*"
+          value={this.state.EmployeeName}
+          onChangeText={this.onChangeNmae}
+        />
+        <TextInputComponent
+          placeholder="Email*"
+          value={this.state.email}
+          onChangeText={this.onChangeEmail}
+        />
+bUr3T3ueL
+QCFXbw4xFD
+ if(this.onSubmit()){
+              this.props.navigation.push('Dashboard')  
+            }
+
+0@q2u08com

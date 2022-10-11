@@ -1,0 +1,113 @@
+  import React from 'react';
+import{View ,Text} from 'react-native';
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import AudioRecorderPlayer, {
+  AVEncoderAudioQualityIOSType,
+  AVEncodingOption,
+  AudioEncoderAndroidType,
+  AudioSet,
+  AudioSourceAndroidType,
+ } from 'react-native-audio-recorder-player'
+import { log } from 'react-native-reanimated';
+
+const audioRecorderPlayer = new AudioRecorderPlayer();
+
+export class Audio extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggingIn: false,
+      recordSecs: 0,
+      recordTime: '00:00:00',
+      currentPositionSec: 0,
+      currentDurationSec: 0,
+      playTime: '00:00:00',
+      duration: '00:00:00',
+    };
+    this.audioRecorderPlayer = new AudioRecorderPlayer();
+    this.audioRecorderPlayer.setSubscriptionDuration(0.09); // optional. Default is 0.1
+  }
+  onStartRecord = async () => {
+    const result = await this.audioRecorderPlayer.startRecorder();
+    this.audioRecorderPlayer.addRecordBackListener((e) => {
+      this.setState({
+        recordSecs: e.currentPosition,
+        recordTime: this.audioRecorderPlayer.mmssss(
+          Math.floor(e.currentPosition),
+        ),
+      });
+      return;
+    });
+    console.log("Recorded",result);
+  };
+  onStopRecord = async () => {
+    const result = await this.audioRecorderPlayer.stopRecorder();
+    this.audioRecorderPlayer.removeRecordBackListener();
+    this.setState({
+      recordSecs: 0,
+    });
+    console.log(result);
+  };
+  onStartPlay = async () => {
+    console.log('onStartPlay');
+    const msg = await this.audioRecorderPlayer.startPlayer();
+    console.log(msg);
+    this.audioRecorderPlayer.addPlayBackListener((e) => {
+      this.setState({
+        currentPositionSec: e.currentPosition,
+        currentDurationSec: e.duration,
+        playTime: this.audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)),
+        duration: this.audioRecorderPlayer.mmssss(Math.floor(e.duration)),
+      });
+      return;
+    });
+  };
+  onPausePlay = async (e) => {
+    await this.audioRecorderPlayer.pausePlayer();
+   };
+   onStopPlay = async (e) => {
+    console.log('onStopPlay');
+    this.audioRecorderPlayer.stopPlayer();
+    this.audioRecorderPlayer.removePlayBackListener();
+    };
+
+  render(){
+  return(
+    <View style={{backgroundColor:'white'}}>
+     <Card>
+     <Card.Title title="Audio recorder and player" />
+     <Title>{this.state.recordTime}</Title>
+     <Button  onPress={() => this.onStartRecord()}>Record</Button>
+          <Button
+            
+            
+            onPress={() => this.onStopRecord()}
+          >
+            STOP
+    </Button>
+          
+          <Title>{this.state.playTime} / {this.state.duration}</Title>
+          <Button   onPress={() => this.onStartPlay()}>
+            PLAY
+        </Button>
+          <Button
+            
+            
+            onPress={() => this.onPausePlay()}
+          >
+            PAUSE
+    </Button>
+          <Button
+            
+            
+            onPress={() => this.onStopPlay()}
+          >
+            STOP
+    </Button>
+     </Card> 
+     </View> 
+    
+
+  )
+  }
+}

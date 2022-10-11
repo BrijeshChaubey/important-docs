@@ -1,0 +1,121 @@
+import React from 'react';
+
+ import (View, Text, Stylesheet} from 'react-native';
+
+ import (Button) from 'react-native-paper'; 4 import Feather from 'react-native-vector-icons/Feather';
+
+ import FontAwesome from 'react-native-vector-icons/Font Awesome'; 6 import (DrawerConent) from ../navigation/DrawerContent';
+
+ import (wp, hp) from '../dimension/Dimension';
+
+
+
+export const DashboardScreen= ({navigation}) => {
+
+return (
+
+<View>
+
+<View style-(Dashboardstyl.header] > <Feather
+
+name="menu"
+
+color="lightblue"
+
+size=(40)
+
+onPress (() => {
+
+navigation.openDrawer(); <DrawerConent />;
+
+Navigation.js
+
+}}
+
+style=(Dashboardstyl.menuicon)
+
+I
+
+/>
+
+<Text>NEOSTORE</Text> <FontAwe some
+
+name="shopping-cart"
+
+size=(40)
+
+color="lightblue"
+
+style=(Dashboardstyl.carticon)
+
+}>
+
+</View>
+
+<Button
+
+onPress=(() => {
+
+navigation.navigate("Signup");
+
+}}>
+
+go to signup
+
+</Button>
+import 'react-native-gesture-handler';
+import React from 'react';
+
+import {SignUp} from './src/Screens/RegisterPage';
+import { Login } from './src/Screens/Login';
+import { ResetPassword } from './src/Screens/ResetPassword';
+import { ForgotPassword } from './src/Screens/ForgotPassword';
+import { createStackNavigator } from '@react-navigation/stack';
+import { DashboardScreen } from './src/Screens/Dashboard';
+import { NavigationContainer } from '@react-navigation/native';
+
+
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import { DrawerConent } from './src/Screens/components/Drawercomponent';
+
+
+
+// const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+const App = () =>  {
+  return (
+    <NavigationContainer>   
+      {/* <Stack.Navigator>
+    <Stack.Screen name="Login" component={Login } />
+    <Stack.Screen name="SignUp" component={SignUp } />
+    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+    <Stack.Screen name="ResetPassword" component={ResetPassword} />
+    <Stack.Screen name="Dashboard" component={Dashboard} />
+  </Stack.Navigator>  */}
+  <Drawer.Navigator drawerContent={props=><DrawerConent{...props}/> }>
+  <Drawer.Screen name="Dashboard" component={DashboardScreen} />
+  <Drawer.Screen name="SignUp" component={SignUp } />
+  <Drawer.Screen name="Login" component={Login } />
+  <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />
+    <Drawer.Screen name="ResetPassword" component={ResetPassword} />
+  </Drawer.Navigator>
+  </NavigationContainer>
+ 
+  )
+}
+
+export default App;
+
+import {SignUp} from './RegisterPage';
+import { Login } from './Login';
+import { ResetPassword } from './ResetPassword';
+import { ForgotPassword } from './ForgotPassword';
+import { createStackNavigator } from '@react-navigation/stack';
+import { DashboardScreen } from './Dashboard';
+import { NavigationContainer } from '@react-navigation/native';
+
+<Drawer.Navigator drawerContent={props => <DrawerConent {...props} />}>
+        <Drawer.Screen name="Dashboard" component={DashboardScreen} />
+        <Drawer.Screen name="SignUp" component={SignUp} />
+        <Drawer.Screen name="Login" component={Login} />
+      </Drawer.Navigator>

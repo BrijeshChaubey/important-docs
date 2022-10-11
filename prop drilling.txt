@@ -1,0 +1,48 @@
+Prop drilling is a linear way sending state from higher component where they initialise and access to lowe components.example 
+if we have access a count state which we already assign in the app.js we can share it to the current component which we are working but it got a issue
+that is if we want to get that state to child componet its should be pass to the parent component first we can not send prop directly to child from grand component.which
+causes to much state initialisation on grand component which make to much code on single component as well as when the project get complex it is difficult to track state and tell it is ussfull or not.
+To resolve the issue we use  context api and usecontext .here we make file name context js here we create context name rate context.and then we take the state from App.js and use it in DisplayRate.js and Button.js.
+//context.js
+import {createContext} from"react";
+export const rateContext=createContext(null);
+//App.js
+import{rateContext} from "./Context";
+function App(){
+const[rate,setRate]=useState(0);
+return(
+<div className="App">
+<rateContext.Provider value={{rate, setRate}}>
+<DisplayRate>
+</rateContext.Provider>
+</div>
+);
+}
+//DisplayRate.js
+import React,{useContext} from "react"
+import{rateContext} from "./Context";
+import Button from "/Button";
+Function DisplayRate(){
+const{rate} = useContext(rateContext);
+return(
+<div>
+{rate}
+<Button/>
+</div>
+);
+}
+//Button.js
+import React,{useContext} from "react"
+import{rateContext} from "./Context";
+Function Button(){
+const{setRate} = useContext(rateContext);
+return(
+<button
+onClick=() =>{
+setRate((rate) => rate+1);
+}}>
+rate the product
+<button/>
+</div>
+);
+}

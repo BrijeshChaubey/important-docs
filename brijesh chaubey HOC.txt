@@ -1,0 +1,42 @@
+Higher order component-It is a component which take other component as input and return new coponent.it is a way of reusing component logic.
+example:-if a project wants different looking components with same functionality then we will create a component of the functionality and pass in hoc to make new component as demanded .and we can use the old component as many times as we want.
+Advantage:-1-It helps to make new component with the help of existing component .here reusability of component get increased .
+2-Due to reusability we can use the component functionality any where in the project where we need by passing the component.
+3-It reduces complexity of code by reusing component.
+4-It increase project efficiency.
+//Code
+import logo from './logo.svg';
+import './App.css';
+import React, {useState,} from 'react';
+function App() {
+  return (
+    <div className="App">
+     <h1>HOC</h1>
+     <HOCRED cmp={Counter}/>
+     <HOCBLUE cmp={Counter}/>
+     <HOCGREEN cmp={Counter}/>
+    </div>
+  );
+}
+function HOCRED(props)
+{
+  return <h2 style={{backgroundColor:'red',width:100}}>Red<props.cmp/></h2>
+}
+function HOCBLUE(props)
+{
+  return <h2 style={{backgroundColor:'blue',width:100}}>Red<props.cmp/></h2>
+}
+function HOCGREEN(props)
+{
+  return <h2 style={{backgroundColor:'green',width:100}}>Red<props.cmp/></h2>
+}
+function Counter(){
+  const[count,setCount]=useState(0);
+  return(
+    <div className="App">
+     <h2>{count}</h2>
+     <button onClick={()=>setCount(count+1)}>Update</button>
+    </div>
+  )
+}
+export default App;

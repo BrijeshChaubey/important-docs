@@ -1,0 +1,27 @@
+//When we upgrade the react native old version of project into new version it will give access to more apis,views,developer toos.it requiers smal amount of effort but it is worth it because it makes project new features .
+To upgrade we need to follow this steps---
+1 : run commond npm install  -g react-native@latest
+2 : after first command run this command npm install react-native@latest --save
+3 : https://react-native-community.github.io/upgrade-helper/  follow this link .
+4 : fill the previous RN version and the Latest RN version  which you want to upgrade..(compare different version of RN)& make changes accordingly.
+5 : follow the documentation carefully and make changes according them.
+6 : At last run the application if it successfully runs it is upgraded to new version.
+//Upgrading a React Native app by creating a new project.
+1.update the RN library
+2.npm install react-native@latest -g
+3.then create New RN project
+
+Check the version of Exixsting project:
+1.Open package.json and you will find the version of RN or
+2. Open CMD and type react-native --version
+
+//The key point which are need to be  kept in mind while doing upgrading-
+-Make sure your caches are cleared.
+-check the version is it already updated.
+-Do a fresh npm install.
+-To make the upgrade a little less painful, pick two versions that are as close to each other as possible. 
+ For example, if the project is using React Native 0.64.0 and we need to upgrade to 0.66.0, try upgrading to 0.65.0 or even 0.64.1. 
+ After successfully upgrading to the next closest version we can try upgrading to subsequent versions before we finally upgrade to the target version. 
+ Doing this will minimize the number of build issues we have to deal with after an upgrade.
+-It is better to upgrade a big project in latest version of RN because project which has less code in it we can make new projectwith latest version which make your work easy.
+//The current latest version of RN is 0.67.3

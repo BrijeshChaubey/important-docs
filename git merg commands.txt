@@ -1,0 +1,8 @@
+git commands--
+git add .
+git commit -m ""
+git pull origin main
+git push origin dev_BrijeshNew
+git checkout main
+git branch
+git merge dev_BrijeshNew

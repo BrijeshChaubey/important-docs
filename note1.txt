@@ -1,0 +1,10 @@
+<Stack.Navigator
+        initialRouteName="HOME"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'lightblue',
+          },
+        }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>

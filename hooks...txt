@@ -1,0 +1,120 @@
+Hooks-hooks are the new feature which is added  to react which allows us to add state and other React features to functional component of react as we know class component has build in state but functional component is state less that why hooks are used to hook state and other React featuresin functional component.
+We cancachieve all lifecycles methods functionality of class components to functional component with the help of useEffect hook.and store state with the help of useState hook.
+useEffect hook- useEffect Hook allows us to perform side effects in your components it tell component to do something after render. examples of side effects are: fetching data, directly updating the DOM, and timers.
+useState hook- It is use to add state to functional component and helps to track state in it.
+//App.js
+import React,{useState,useEffect} from 'react';
+import Child from './Child';
+function App(){
+const[count,setCount]=useState(0)
+return(
+<div>
+<Child count={count}/>
+<button onClick={()=>{setCount(count+1)}}>click</button>
+</div>
+)}
+export default App;
+//Child.js
+import React,{useState,useEffect} from 'react';
+export default function Child(props){
+useEffect(()=>{
+console.log(props)
+})
+return(
+<div>
+<h1>Child Component</h1>
+<h2>{props.count}</h2>
+</div>
+)}
+
+useRef-It is a hook which store a mutable value that does not cause a re-render when updated.It allows us to persist values between renders.
+import {useState, useEffect, useRef} from "react";
+
+
+function App() {
+  const [inputValue, setInputValue] = useState("");
+  const count = useRef(0);
+
+  useEffect(() => {
+    count.current = count.current + 1;
+  });
+
+  return (
+    <>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <h1>Render Count: {count.current}</h1>
+    </>
+  );
+}
+useContext:It is a way of manage state globally it means when there are to many nested components are present and we have access a state by any component we need to pass it like prop which is done by pro drilling but with the help usecontext we can avoid prop drilling.
+//context.js
+import {createContext} from"react";
+export const rateContext=createContext(null);
+//App.js
+import{rateContext} from "./Context";
+function App(){
+const[rate,setRate]=useState(0);
+return(
+<div className="App">
+<rateContext.Provider value={{rate, setRate}}>
+<DisplayRate>
+</rateContext.Provider>
+</div>
+);
+}
+//DisplayRate.js
+import React,{useContext} from "react"
+import{rateContext} from "./Context";
+import Button from "/Button";
+Function DisplayRate(){
+const{rate} = useContext(rateContext);
+return(
+<div>
+{rate}
+<Button/>
+</div>
+);
+}
+//Button.js
+import React,{useContext} from "react"
+import{rateContext} from "./Context";
+Function Button(){
+const{setRate} = useContext(rateContext);
+return(
+<button
+onClick=() =>{
+setRate((rate) => rate+1);
+}}>
+rate the product
+<button/>
+</div>
+);
+}
+useMemo-it is a hook which is use stop unneccerary rendering of any component of project like if you are change state in any component function them get call and again when program renders it is dissolved useMemo hook.
+
+//App.js
+import React,{useState,useMemo} from 'react';
+function App(){
+const[count,setCount]=useState(0);
+const[item,setItem]=useState(10);
+const multiCountMemo=useMemo(function multicount(){
+ console.log("multicount")
+return count*5
+},[count]}
+return(
+<div>
+<h1>useMemo hooks</h1>
+<h2>Count:{count}</h2>
+<h2>item:{item}</h2>
+<h2>{multiCountMemo}</h2>
+<button onClick={()=>{setCount(count+5)}}>update count</button>
+<button onClick={()=>{setItem(count*10)}}>update item</button>
+</div>
+)}
+export default App;
+
+

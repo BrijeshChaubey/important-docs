@@ -1,0 +1,6 @@
+Interview questions
+studied about some interview question and implementing.
+Components 
+ studied what is component ,Types of components.
+implementing component how to  initilise state and prop in class component.
+implementing component how to  initilise state and prop in functional component
